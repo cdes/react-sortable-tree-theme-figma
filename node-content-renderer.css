@@ -1,0 +1,257 @@
+.rowWrapper {
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+}
+.rowWrapper:hover {
+  outline: 1px solid #4d80e4;
+  outline-offset: -1px;
+}
+
+.node-list-selected-node {
+  background-color: #daebf7;
+}
+
+.node-list-selected-node .rowWrapper:hover,
+.rowWrapper:active {
+  outline: 0;
+}
+
+.rowWrapperDragDisabled {
+  cursor: not-allowed;
+}
+
+.row {
+  height: 100%;
+  white-space: nowrap;
+  display: flex;
+  position: relative;
+  width: 100%;
+}
+.row > * {
+  box-sizing: border-box;
+}
+
+/**
+ * The outline of where the element will go if dropped, displayed while dragging
+ */
+.rowLandingPad,
+.rowCancelPad {
+  border: none;
+  box-shadow: none;
+  outline: none;
+}
+.rowLandingPad *,
+.rowCancelPad * {
+  opacity: 0 !important;
+}
+.rowLandingPad::before,
+.rowCancelPad::before {
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 2px;
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+}
+
+/**
+ * Alternate appearance of the landing pad when the dragged location is invalid
+ */
+.rowCancelPad::before {
+  background-color: #e6a8ad;
+}
+
+/**
+ * Nodes matching the search conditions are highlighted
+ */
+.rowSearchMatch {
+  box-shadow: inset 0 -7px 7px -3px #0080ff;
+}
+
+/**
+ * The node that matches the search conditions and is currently focused
+ */
+.rowSearchFocus {
+  box-shadow: inset 0 -7px 7px -3px #fc6421;
+}
+
+.toolbarButton,
+.rowToolbar,
+.rowLabel,
+.rowContents {
+  display: flex;
+}
+
+.rowContents {
+  position: relative;
+  height: 100%;
+  flex: 1 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  line-height: 100%;
+}
+
+.rowLabel {
+  flex: 0 1 auto;
+  padding-right: 20px;
+  width: 100%;
+}
+
+.rowLabel .rowTitle {
+  font-size: 11px;
+  color: #333;
+  font-feature-settings: "calt" on, "ss02" on;
+}
+
+.rowToolbar {
+  flex: 0 1 auto;
+  display: flex;
+}
+
+.collapseButton,
+.expandButton {
+  appearance: none;
+  border: none;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.collapseButton:focus,
+.expandButton:focus {
+  outline: none;
+}
+
+.collapseButton svg,
+.expandButton svg {
+  opacity: 0;
+}
+
+#nodes-list:hover .collapseButton svg,
+#nodes-list:hover .expandButton svg {
+  opacity: 1;
+}
+
+/**
+ * Line for under a node with children
+ */
+.lineChildren {
+  height: 100%;
+  display: inline-block;
+}
+
+/* ==========================================================================
+   Scaffold
+
+    Line-overlaid blocks used for showing the tree structure
+   ========================================================================== */
+.lineBlock,
+.absoluteLineBlock {
+  height: 100%;
+  position: relative;
+  display: inline-block;
+  flex: 0 0 auto;
+}
+
+.absoluteLineBlock {
+  position: absolute;
+  top: 0;
+}
+
+.lineBlock:first-child {
+  display: none;
+}
+
+.lineBlock + .row {
+  margin-left: 4px;
+}
+
+/* Highlight line for pointing to dragged row destination
+   ========================================================================== */
+/**
+ * +--+--+
+ * |  |  |
+ * |  |  |
+ * |  |  |
+ * +--+--+
+ */
+.highlightLineVertical {
+  display: none;
+  z-index: 3;
+}
+.highlightLineVertical::before {
+  display: none;
+  position: absolute;
+  content: "";
+  background-color: #36c2f6;
+  width: 1px;
+  margin-left: -3px;
+  left: 50%;
+  top: 0;
+  height: 100%;
+}
+
+/**
+ * +-----+
+ * |     |
+ * |  +--+
+ * |  |  |
+ * +--+--+
+ */
+.highlightTopLeftCorner::before {
+  display: none;
+  z-index: 3;
+  content: "";
+  position: absolute;
+  border-top: solid 1px #36c2f6;
+  border-left: solid 1px #36c2f6;
+  box-sizing: border-box;
+  height: calc(50% + 3px);
+  top: 50%;
+  margin-top: -3px;
+  right: 0;
+  width: calc(50% + 3px);
+}
+
+/**
+ * +--+--+
+ * |  |  |
+ * |  |  |
+ * |  +->|
+ * +-----+
+ */
+.highlightBottomLeftCorner {
+  display: none;
+  z-index: 3;
+}
+.highlightBottomLeftCorner::before {
+  display: none;
+  content: "";
+  position: absolute;
+  border-bottom: solid 1px #36c2f6;
+  border-left: solid 1px #36c2f6;
+  box-sizing: border-box;
+  height: calc(100% + 3px);
+  top: 0;
+  right: 7px;
+  width: calc(50% - 4px);
+}
+.highlightBottomLeftCorner::after {
+  display: none;
+  content: "";
+  position: absolute;
+  height: 0;
+  right: 0;
+  top: 100%;
+  margin-top: -4px;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 4px solid #36c2f6;
+}
